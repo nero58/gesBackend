@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer,CompaniesRouteSerializer,ManufacturerSerializer
 from productsCatalogue.models import Product,Company,User
 
 
@@ -11,7 +11,7 @@ def getroutes(request):
         {"GET":"api/products"},
         {"GET":"api/products/<str:company>"},
         {"GET":"api/product/<str:pk>"},
-        {"POST":"api/submit-enquiry"}
+        # {"POST":"api/submit-enquiry"}
         ]
 
     return JsonResponse(routes,safe=False)
@@ -24,7 +24,7 @@ def getCompanyProducts(request,company):
     return Response(serial.data)
 
 @api_view(['GET'])
-def getProducts(request):
+def getAllProducts(request):
     pro = Product.objects.all()
     serial = ProductSerializer(pro, many=True)
 
@@ -36,6 +36,19 @@ def getProduct(request,pk):
     pro = Product.objects.get(id=pk)
     serial = ProductSerializer(pro,many=False)
     return Response(serial.data)
+
+@api_view(["GET"])
+def getCompanyAndProducts(request,company):
+    comp = Company.objects.get(company_name=company)
+    compserial = CompaniesRouteSerializer(comp,many=False)
+    return Response(compserial.data)
+
+
+@api_view(["GET"])
+def getCompanies(request):
+    comp = Company.objects.all()
+    compserial = ManufacturerSerializer(comp,many=True)
+    return Response(compserial.data)
 
 @api_view(["POST"])
 def postEnquiry(request):

@@ -4,7 +4,21 @@ from rest_framework import serializers
 class ManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ['company_name']
+        fields = ['company_name','img']
+
+
+    
+class CompaniesRouteSerializer(serializers.ModelSerializer):
+    products=serializers.SerializerMethodField()
+    class Meta:
+        model = Company
+        fields = ['company_name','img','about','products']
+    
+    def get_products(self,obj):
+        comp = Company.objects.get(company_name =  obj.company_name)
+        products= Product.objects.filter(manufacturer =comp)
+
+        return [{'img':"img", 'partnumber': product.part_number} for product in products]
 
 class FanTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,7 +37,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id','manufacturer', 'part_number', 'ac_dc', 'fan_type','size', 'voltage', 'current', 'termination', 'instock']
+        fields = ['id','img','manufacturer', 'part_number', 'ac_dc', 'fan_type','size', 'voltage', 'current', 'termination', 'instock']
         read_only_fields = ['id']
 
     def get_size(self, obj):
