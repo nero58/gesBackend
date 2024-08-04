@@ -1,11 +1,13 @@
 asgiref==3.8.1
 backports.zoneinfo==0.2.1
+dj-rest-auth==6.0.0
 Django==4.2.14
 django-filter==24.2
 django-hosts==6.0
 djangorestframework==3.15.2
 importlib-metadata==8.2.0
 Markdown==3.6
+rest-framework-simplejwt==0.0.2
 sqlparse==0.5.1
 typing-extensions==4.12.2
 zipp==3.19.2

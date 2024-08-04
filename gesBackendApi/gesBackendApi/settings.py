@@ -11,7 +11,26 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+# settings.py
+from datetime import timedelta # import this library top of the settings.py file
 
+# put on your settings.py file below INSTALLED_APPS
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
+}
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +44,8 @@ SECRET_KEY = 'django-insecure-ydl-mx!s0a4b^!^1=+p677mye1@$#4ycri0nr!m1l2s+9-srl^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "gesadmin.localhost"] #for local testing, else empty would work
+# ALLOWED_HOSTS = ["localhost", "gesadmin.localhost"] #for local testing, else empty would work
+ALLOWED_HOSTS = ["*"] #for local testing, else empty would work
 
 ROOT_HOSTCONF = 'gesBackendApi.hosts'
 DEFAULT_HOST = ' ' # name in host(r'', mysite.urls, name=' ')
@@ -39,9 +59,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     'rest_framework',
     'productsCatalogue',
-    'django_hosts'
+    'django_hosts',
+    'restrictAdmin'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +83,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'restrictAdmin.views.RestrictStaffToAdminMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django_hosts.middleware.HostsResponseMiddleware'
 ]
 

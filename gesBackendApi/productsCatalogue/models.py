@@ -2,10 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 #Signup signin ???? for admin access
-class User(User):
-    pass
-    def __str__(self):
-        return self.username
+
 
 class Company(models.Model):
     company_name=models.CharField(max_length=50,unique=True)
