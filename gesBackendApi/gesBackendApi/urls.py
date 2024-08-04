@@ -14,14 +14,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib import admin
 from django.urls import path,include
-# from django.contrib.admin.views.decorators import staff_member_required
+
 
 urlpatterns = [
-    # path('admin/login/', admin.site.login, name='admin:login'),  # This line is optional if you use default login
-    # path('gesadmin/', staff_member_required(admin.site.urls)),
     path('gesadmin/', admin.site.urls),
     path('api/', include("productsCatalogue.urls")),
     path('auth/', include("restrictAdmin.urls")),
