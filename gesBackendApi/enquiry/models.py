@@ -4,4 +4,4 @@ from django.db import models
 
 
 class CustomerLead(models.Model):
-    
+    pass

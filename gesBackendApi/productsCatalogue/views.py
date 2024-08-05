@@ -8,9 +8,10 @@ from productsCatalogue.models import Product,Company,User
 
 def getroutes(request):
     routes=[
-        {"GET":"api/products"},
-        {"GET":"api/products/<str:company>"},
-        {"GET":"api/product/<str:pk>"},
+        {"GET":"api/products/all"},
+        {"GET":"api/product/<part_number>"},
+        {"GET":"api/companies/all"},
+        {"GET":"api/products/<company_name>"},
         # {"POST":"api/submit-enquiry"}
         ]
 

@@ -15,22 +15,22 @@ from pathlib import Path
 from datetime import timedelta # import this library top of the settings.py file
 
 # put on your settings.py file below INSTALLED_APPS
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+# }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
-}
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+#     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+#     'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
+#     'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
+#     'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
+# }
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -59,23 +59,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
+    # 'rest_framework.authtoken',
+    # 'rest_framework_simplejwt',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
+    # 'dj_rest_auth',
+    # 'dj_rest_auth.registration',
     'rest_framework',
     'productsCatalogue',
-    'django_hosts',
-    'restrictAdmin'
+    # 'django_hosts',
+    # 'restrictAdmin'
 ]
 
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware',
+    # 'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -83,9 +83,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'restrictAdmin.views.RestrictStaffToAdminMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
-    'django_hosts.middleware.HostsResponseMiddleware'
+    # 'restrictAdmin.views.RestrictStaffToAdminMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
+    # 'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
 ROOT_URLCONF = 'gesBackendApi.urls'
