@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from a .env file if it exists
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -67,10 +72,10 @@ MIDDLEWARE = [
 # settings.py
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = 'c75edf71e748cb8dc8b973a8b0296e50'
-AWS_SECRET_ACCESS_KEY = '296c8a6920969eeeb0b0a410a7d7742514c2ad74ab39dc08c23f2c6ed2292796'
-AWS_STORAGE_BUCKET_NAME = 'ges-product-catalogue'
-AWS_S3_ENDPOINT_URL = 'https://5e01b2a954db9d978b0a1a3ecfa10fac.r2.cloudflarestorage.com'
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com'
 
 CORS_ORIGIN_WHITELIST = [
