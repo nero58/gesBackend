@@ -40,18 +40,28 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
 
+    manufacturer = ManufacturerSerializer()
+    img = ProductImageSerializer(many=True, source='images')
+    details = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = ['id', 'img', 'manufacturer', 'details']
+
+    def get_details(self, obj):
+        return DetailSerializer(obj, context=self.context).data
+    
+class DetailSerializer(serializers.ModelSerializer):
+    
     size = serializers.SerializerMethodField()
     voltage = serializers.SerializerMethodField()
     current = serializers.SerializerMethodField()
     termination = serializers.SerializerMethodField()
-    manufacturer = ManufacturerSerializer()
     fan_type = FanTypeSerializer()
-    img =ProductImageSerializer(many=True, source='images')
 
     class Meta:
         model = Product
-        fields = ['id','img','manufacturer', 'part_number', 'ac_dc', 'fan_type','size', 'voltage', 'current', 'termination', 'instock']
-        read_only_fields = ['id']
+        fields = ['part_number', 'ac_dc', 'fan_type', 'size', 'voltage', 'current', 'termination', 'instock']
 
     def get_size(self, obj):
         return f"{obj.length} MM x {obj.width} MM x {obj.height} MM"
@@ -62,33 +72,7 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_current(self, obj):
         return f"{obj.current} A"
     
-    def get_termination(self,obj):
-        if(int(obj.termination)>1):
+    def get_termination(self, obj):
+        if int(obj.termination) > 1:
             return f'{obj.termination} Wires'
         return f'{obj.termination} Wire'
-    
-    # def get_img(self, obj):
-    #     urls =[]
-    #     if obj.img is not None :
-    #         url = obj.img.url
-    #         urls.append(url)
-    #         return urls
-            
-
-    # def get_img(self, obj):
-    #     request = self.context.get('request')
-    #     if not request:
-    #         return []
-
-    #     # Construct the base URL for images
-    #     base_url = request.build_absolute_uri('/products/')
-
-    #     # Check if the product has images
-    #     image_urls = []
-    #     if obj.img:  # Assuming img is a list of image file paths
-    #         for img_name in obj.img.split(','):  # Assuming images are stored as comma-separated filenames
-    #             img_url = f"{base_url}{obj.part_number}/{img_name}"
-    #             image_urls.append(img_url)
-
-    #     return image_urls
-    

@@ -33,8 +33,8 @@ def getAllProducts(request):
 # Create your views here.
 
 @api_view(["GET"])
-def getProduct(request,pk):
-    pro = Product.objects.get(id=pk)
+def getProduct(request,part_number):
+    pro = Product.objects.get(part_number=part_number)
     serial = ProductSerializer(pro,many=False)
     return Response(serial.data)
 
