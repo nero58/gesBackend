@@ -17,12 +17,12 @@ def getroutes(request):
 
     return JsonResponse(routes,safe=False)
 
-@api_view(['GET'])
-def getCompanyProducts(request,company):
-    manufacturer = Company.objects.get(company_name=company)
-    pro = Product.objects.filter(manufacturer=manufacturer)
-    serial = ProductSerializer(pro, many=True)
-    return Response(serial.data)
+# @api_view(['GET'])
+# def getCompanyProducts(request,company):
+#     manufacturer = Company.objects.get(company_name=company)
+#     pro = Product.objects.filter(manufacturer=manufacturer)
+#     serial = ProductSerializer(pro, many=True)
+#     return Response(serial.data)
 
 @api_view(['GET'])
 def getAllProducts(request):
@@ -51,7 +51,7 @@ def getCompanies(request):
     compserial = ManufacturerSerializer(comp,many=True)
     return Response(compserial.data)
 
-@api_view(["POST"])
-def postEnquiry(request):
+# @api_view(["POST"])
+# def postEnquiry(request):
     
-    pass
+#     pass
