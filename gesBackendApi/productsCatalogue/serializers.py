@@ -1,4 +1,4 @@
-from productsCatalogue.models import Product,Company,Fantype,User
+from productsCatalogue.models import Product,Company,Fantype,ProductImage
 from rest_framework import serializers
 
 class ManufacturerSerializer(serializers.ModelSerializer):
@@ -26,6 +26,18 @@ class FanTypeSerializer(serializers.ModelSerializer):
         fields = ['type']  
 
 
+class ProductImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProductImage
+        fields = ['image']
+
+    def get_image(self, obj):
+        if obj.image:
+            return f"/{obj.image.name}"
+        return None
+
 class ProductSerializer(serializers.ModelSerializer):
 
     size = serializers.SerializerMethodField()
@@ -34,6 +46,7 @@ class ProductSerializer(serializers.ModelSerializer):
     termination = serializers.SerializerMethodField()
     manufacturer = ManufacturerSerializer()
     fan_type = FanTypeSerializer()
+    img =ProductImageSerializer(many=True, source='images')
 
     class Meta:
         model = Product
@@ -53,5 +66,29 @@ class ProductSerializer(serializers.ModelSerializer):
         if(int(obj.termination)>1):
             return f'{obj.termination} Wires'
         return f'{obj.termination} Wire'
-        
+    
+    # def get_img(self, obj):
+    #     urls =[]
+    #     if obj.img is not None :
+    #         url = obj.img.url
+    #         urls.append(url)
+    #         return urls
+            
+
+    # def get_img(self, obj):
+    #     request = self.context.get('request')
+    #     if not request:
+    #         return []
+
+    #     # Construct the base URL for images
+    #     base_url = request.build_absolute_uri('/products/')
+
+    #     # Check if the product has images
+    #     image_urls = []
+    #     if obj.img:  # Assuming img is a list of image file paths
+    #         for img_name in obj.img.split(','):  # Assuming images are stored as comma-separated filenames
+    #             img_url = f"{base_url}{obj.part_number}/{img_name}"
+    #             image_urls.append(img_url)
+
+    #     return image_urls
     

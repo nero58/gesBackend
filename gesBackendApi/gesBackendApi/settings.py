@@ -11,26 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-# settings.py
-from datetime import timedelta # import this library top of the settings.py file
 
-# put on your settings.py file below INSTALLED_APPS
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ),
-# }
-
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-#     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-#     'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
-#     'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
-#     'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
-# }
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,12 +43,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'productsCatalogue',
-    'restrictAdmin'
+    # 'restrictAdmin'
 
 ]
 
 MIDDLEWARE = [
+
     'corsheaders.middleware.CorsMiddleware',
+    'restrictAdmin.views.if404Middleware',
     # 'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -76,10 +59,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'restrictAdmin.views.RestrictStaffToAdminMiddleware',
+    # 'restrictAdmin.views.RestrictStaffToAdminMiddleware',
     # 'allauth.account.middleware.AccountMiddleware',
     # 'django_hosts.middleware.HostsResponseMiddleware'
 ]
+
+# settings.py
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'c75edf71e748cb8dc8b973a8b0296e50'
+AWS_SECRET_ACCESS_KEY = '296c8a6920969eeeb0b0a410a7d7742514c2ad74ab39dc08c23f2c6ed2292796'
+AWS_STORAGE_BUCKET_NAME = 'ges-product-catalogue'
+AWS_S3_ENDPOINT_URL = 'https://5e01b2a954db9d978b0a1a3ecfa10fac.r2.cloudflarestorage.com'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com'
 
 CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:8000",
