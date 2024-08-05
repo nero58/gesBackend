@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     # 'rest_framework.authtoken',
     # 'rest_framework_simplejwt',
 
@@ -83,9 +84,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     # 'restrictAdmin.views.RestrictStaffToAdminMiddleware',
     # 'allauth.account.middleware.AccountMiddleware',
     # 'django_hosts.middleware.HostsResponseMiddleware'
+]
+
+CORS_ALLOWED_ORIGINS = [
+    # "https://your-allowed-domain.com",
+    "http://127.0.0.1:8000",
+    "https://global-electronics.vercel.app"
 ]
 
 ROOT_URLCONF = 'gesBackendApi.urls'
