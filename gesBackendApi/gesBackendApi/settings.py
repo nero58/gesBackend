@@ -60,22 +60,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    # 'rest_framework.authtoken',
-    # 'rest_framework_simplejwt',
-
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-
-    # 'dj_rest_auth',
-    # 'dj_rest_auth.registration',
     'rest_framework',
     'productsCatalogue',
-    # 'django_hosts',
-    # 'restrictAdmin'
+    'restrictAdmin'
+
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     # 'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,18 +76,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    # 'restrictAdmin.views.RestrictStaffToAdminMiddleware',
+    'restrictAdmin.views.RestrictStaffToAdminMiddleware',
     # 'allauth.account.middleware.AccountMiddleware',
     # 'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    # "https://your-allowed-domain.com",
+CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:8000",
     "https://global-electronics.vercel.app"
 ]
 
+# CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'gesBackendApi.urls'
 
 TEMPLATES = [
