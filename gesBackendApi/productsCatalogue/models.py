@@ -62,14 +62,6 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.manufacturer} {self.part_number}" 
     
-#POST 
-class Enquiry(models.Model):
-    full_name = models.CharField(max_length=100)
-    contact_number = models.CharField(max_length=15)
-    email = models.EmailField() #Not required
-    manufacturer= models.CharField(max_length=50)
-    product_name = models.CharField(max_length=100)
-    discription = models.CharField(max_length=200)
-    # images = models.ImageField() #Not required
+
 
 
