@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-#Signup signin ???? for admin access
-
 
 class Company(models.Model):
     company_name=models.CharField(max_length=50,unique=True)
@@ -23,9 +21,6 @@ def upload_to_product_image(instance, filename):
     product_part_number = instance.product.part_number
     return f'products/{product_part_number}/{filename}'
 
-def upload_to_product_image(instance, filename):
-    product_part_number = instance.product.part_number
-    return f'products/{product_part_number}/{filename}'
 
 class ProductImage(models.Model):
     product = models.ForeignKey('Product', related_name='images', on_delete=models.CASCADE,null=True,blank=True)
@@ -34,12 +29,6 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"Image for {self.product.part_number}"
     
-class ProductImage(models.Model):
-    product = models.ForeignKey('Product', related_name='images', on_delete=models.CASCADE,null=True,blank=True)
-    image = models.ImageField(upload_to=upload_to_product_image)
-
-    def __str__(self):
-        return f"Image for {self.product.manufacturer}"
     
 class Product(models.Model):
     img = models.ManyToManyField(ProductImage, blank=True, related_name='products')
