@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'corsheaders',
     'rest_framework',
     'productsCatalogue',
@@ -68,6 +69,12 @@ MIDDLEWARE = [
     # 'allauth.account.middleware.AccountMiddleware',
     # 'django_hosts.middleware.HostsResponseMiddleware'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ]
+}
 
 # settings.py
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

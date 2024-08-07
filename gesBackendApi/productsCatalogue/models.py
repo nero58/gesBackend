@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Company(models.Model):
     company_name=models.CharField(max_length=50,unique=True)
     about = models.CharField(max_length=500,blank=True)
@@ -17,6 +18,7 @@ class Fantype(models.Model):
     def __str__(self):
         return self.type
 
+    
 def upload_to_product_image(instance, filename):
     product_part_number = instance.product.part_number
     return f'products/{product_part_number}/{filename}'

@@ -1,3 +1,9 @@
+from rest_framework.views import APIView
+from rest_framework import status
+from fuzzywuzzy import fuzz, process
+from .models import Product
+from .filters import ProductFilter
+from rest_framework import generics
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -30,7 +36,6 @@ def getAllProducts(request):
     serial = AllProductSerializer(pro, many=True)
 
     return Response(serial.data)
-# Create your views here.
 
 @api_view(["GET"])
 def getProduct(request,part_number):
@@ -51,7 +56,9 @@ def getCompanies(request):
     compserial = ManufacturerSerializer(comp,many=True)
     return Response(compserial.data)
 
-# @api_view(["POST"])
-# def postEnquiry(request):
-    
-#     pass
+# @api_view
+
+class ProductSearchView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = AllProductSerializer
+    filterset_class = ProductFilter
