@@ -1,10 +1,11 @@
 from productsCatalogue.models import Product,Company,Fantype,ProductImage
 from rest_framework import serializers
+import json
 
 class ManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ['company_name','img']
+        fields = ['company_name','about']
 
 
     
@@ -18,7 +19,7 @@ class CompaniesRouteSerializer(serializers.ModelSerializer):
         comp = Company.objects.get(company_name =  obj.company_name)
         products= Product.objects.filter(manufacturer =comp)
 
-        return [{'img':"img", 'partnumber': product.part_number} for product in products]
+        return [{'partnumber': product.part_number} for product in products]
 
 class FanTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,7 +43,9 @@ class AllProductSerializer(serializers.ModelSerializer):
 
     manufacturer = ManufacturerSerializer()
     img = ProductImageSerializer(many=True, source='images')
+    # fantype = serializers.SerializerMethodField()
     details = serializers.SerializerMethodField()
+
     # related = serializers.SerializerMethodField()
 
     class Meta:
@@ -51,23 +54,39 @@ class AllProductSerializer(serializers.ModelSerializer):
 
     def get_details(self, obj):
         return [
-            {'part_number': obj.part_number},
-            {'ac_dc': obj.ac_dc},
-            {'fan_type': FanTypeSerializer(obj.fan_type).data},
-            {'size': f"{obj.length} MM x {obj.width} MM x {obj.height} MM"},
-            {'voltage': f"{obj.voltage} VDC"},
-            {'current': f"{obj.current} A"},
-            {'termination': f"{obj.termination} Wires" if int(obj.termination) > 1 else f"{obj.termination} Wire"},
-            {'instock': obj.instock}
+            {"name":"fan_type","value":json.loads(json.dumps(FanTypeSerializer(obj.fan_type).data))["type"]},
+            {"name":'part_number', "value": obj.part_number},
+            {"name":'ac_dc', "value": obj.ac_dc},
+            {"name":'size', "value": f"{obj.length} MM x {obj.width} MM x {obj.height} MM"},
+            {"name":'voltage', "value": f"{obj.voltage} VDC"},
+            {"name":'current', "value": f"{obj.current} A"},
+            {"name":'termination', "value": f"{obj.termination} Wires" if int(obj.termination) > 1 else f"{obj.termination} Wire"},
+            {"name":'Material', "value":obj.Material},
+            {"name":'Color', "value": obj.Color},
+            {"name":'Warrenty', "value": obj.Warrenty},
+            {"name":'instock', "value": obj.instock},
+
         ]
+    
+
 
 
 class RelatedProductSerializer(serializers.ModelSerializer):
-    img = ProductImageSerializer(many=True, source='images')
-
+    
+    image = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
     class Meta:
         model = Product
-        fields = ['part_number', 'img']
+        fields = ["name",'image']
+    
+    def get_image(self,obj):
+        first_image = obj.images.first()
+        if first_image:
+            return ProductImageSerializer(first_image).data['image']
+        return None
+    
+    def get_name(self,obj):
+        return f"{obj.part_number} {obj.manufacturer} Cooling Fan"
 
 class SingleProductSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField()

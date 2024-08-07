@@ -5,12 +5,9 @@ from .models import Product,User,Company,Enquiry,Fantype,Product, ProductImage
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
-class FantypeInline(admin.TabularInline):
-    model = Fantype
-    extra = 1
 
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImageInline,FantypeInline]
+    inlines = [ProductImageInline]
 
 admin.site.register(Product, ProductAdmin,)
 admin.site.register(ProductImage)
