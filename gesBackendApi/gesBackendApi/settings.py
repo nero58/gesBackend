@@ -35,7 +35,6 @@ ALLOWED_HOSTS = ["*"] #for local testing, else empty would work
 
 ROOT_HOSTCONF = 'gesBackendApi.hosts'
 DEFAULT_HOST = ' ' # name in host(r'', mysite.urls, name=' ')
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,19 +54,27 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
 
-    'corsheaders.middleware.CorsMiddleware',
-    # 'restrictAdmin.views.if404Middleware',
-    # 'django_hosts.middleware.HostsRequestMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'restrictAdmin.views.RestrictStaffToAdminMiddleware',
-    # 'allauth.account.middleware.AccountMiddleware',
-    # 'django_hosts.middleware.HostsResponseMiddleware'
+    # # 'corsheaders.middleware.CorsMiddleware',
+    # # 'restrictAdmin.views.if404Middleware',
+    # # 'django_hosts.middleware.HostsRequestMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
+    # 'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.messages.middleware.MessageMiddleware',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # # 'restrictAdmin.views.RestrictStaffToAdminMiddleware',
+    # # 'allauth.account.middleware.AccountMiddleware',
+    # # 'django_hosts.middleware.HostsResponseMiddleware'
+      "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 REST_FRAMEWORK = {
@@ -85,12 +92,12 @@ AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com'
 
-CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:8000",
-    "https://global-electronics.vercel.app"
-]
+# CORS_ORIGIN_WHITELIST = [
+#     "http://127.0.0.1:8000",
+#     "https://global-electronics.vercel.app"
+# ]
 
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'gesBackendApi.urls'
 
 TEMPLATES = [
