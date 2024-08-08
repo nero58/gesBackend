@@ -54,9 +54,9 @@ class AllProductSerializer(serializers.ModelSerializer):
 
     def get_details(self, obj):
         return [
-            {"name":"fan_type","value":json.loads(json.dumps(FanTypeSerializer(obj.fan_type).data))["type"]},
-            {"name":'part_number', "value": obj.part_number},
-            {"name":'ac_dc', "value": obj.ac_dc},
+            {"name":"fan type","value":json.loads(json.dumps(FanTypeSerializer(obj.fan_type).data))["type"]},
+            {"name":'part number', "value": obj.part_number},
+            {"name":'ac dc', "value": f" {obj.ac_dc}"},
             {"name":'size', "value": f"{obj.length} MM x {obj.width} MM x {obj.height} MM"},
             {"name":'voltage', "value": f"{obj.voltage} VDC"},
             {"name":'current', "value": f"{obj.current} A"},
