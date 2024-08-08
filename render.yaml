@@ -12,7 +12,7 @@ services:
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn gesBackendApi.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
-      - key: DATABASE_URL
+      - key: postgresql://temp_restapi_db_user:LqgAVqvUVWrqbHdPLqSVWR66SKOv57nj@dpg-cqqfi9bv2p9s73b6u38g-a.oregon-postgres.render.com/temp_restapi_db
         fromDatabase:
           name: temp_restapi_db
           property: connectionString
