@@ -27,7 +27,7 @@ class CompaniesRouteSerializer(serializers.ModelSerializer):
     products=serializers.SerializerMethodField()
     class Meta:
         model = Company
-        fields = ['company_name','img','header','about','products']
+        fields = ['company_name','img','about','products']
     
     def get_products(self,obj):
         comp = Company.objects.get(company_name =  obj.company_name)
@@ -57,10 +57,7 @@ class AllProductSerializer(serializers.ModelSerializer):
 
     manufacturer = ManufacturerSerializer()
     img = ProductImageSerializer(many=True)
-    # fantype = serializers.SerializerMethodField()
     details = serializers.SerializerMethodField()
-
-    # related = serializers.SerializerMethodField()
 
     class Meta:
         model = Product

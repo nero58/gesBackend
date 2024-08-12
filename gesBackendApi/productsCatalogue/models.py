@@ -16,7 +16,7 @@ class CompanyImage(models.Model):
 class Company(models.Model):
     company_name=models.CharField(max_length=50,unique=True)
     about = models.CharField(max_length=1000,blank=True)
-    img = models.ManyToManyField(CompanyImage, blank=True)
+    img = models.OneToOneField(CompanyImage, blank=True, on_delete=models.CASCADE)
     
 
     def __str__(self):
