@@ -17,8 +17,8 @@ class CompanyAdmin(admin.ModelAdmin):
     inlines = [ComapnyImageInline]
 
 
-admin.site.register(Product, ProductAdmin,)
 admin.site.register(ProductImage)
-admin.site.register(Company, CompanyAdmin)
+admin.site.register(Product, ProductAdmin,)
 admin.site.register(CompanyImage)
+admin.site.register(Company, CompanyAdmin)
 admin.site.register(Fantype)

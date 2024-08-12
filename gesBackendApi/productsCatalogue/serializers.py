@@ -56,7 +56,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 class AllProductSerializer(serializers.ModelSerializer):
 
     manufacturer = ManufacturerSerializer()
-    img = ProductImageSerializer(many=True, source='images')
+    img = ProductImageSerializer(many=True)
     # fantype = serializers.SerializerMethodField()
     details = serializers.SerializerMethodField()
 
