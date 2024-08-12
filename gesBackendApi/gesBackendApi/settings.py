@@ -120,24 +120,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gesBackendApi.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         # Replace this value with your local database's connection string.
-#         default=os.getenv("DATABASE_URL"),
-#         conn_max_age=600
-#     )
-# }
-
 # Replace the DATABASES section of your settings.py with this
 DATABASES = {
   'default': {
@@ -146,7 +128,7 @@ DATABASES = {
     'USER': os.getenv('PGUSER'),
     'PASSWORD': os.getenv('PGPASSWORD'),
     'HOST': os.getenv('PGHOST'),
-    'PORT': os.getenv('PGPORT', 5432),
+    'PORT': os.getenv('PGPORT', 22960),
     'OPTIONS': {
       'sslmode': 'require',
     },
