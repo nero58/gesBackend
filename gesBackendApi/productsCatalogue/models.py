@@ -1,15 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+def upload_to_company_image(instance, filename):
+    comapny_name = instance.company_ref.company_name
+    return f'companies/{comapny_name}/{filename}'
 
+class CompanyImage(models.Model):
+    company_ref = models.ForeignKey('Company', related_name='companyprofileimg', on_delete=models.CASCADE,null=True,blank=True)
+    image = models.ImageField(upload_to=upload_to_company_image)
+
+    def __str__(self):
+        return f"Image for {self.company_ref}"
+    
 
 class Company(models.Model):
     company_name=models.CharField(max_length=50,unique=True)
-    about = models.CharField(max_length=500,blank=True)
-    img = models.CharField(max_length=500,blank=True)
+    about = models.CharField(max_length=1000,blank=True)
+    img = models.ManyToManyField(CompanyImage, blank=True)
+    
 
     def __str__(self):
         return self.company_name
+    
+
     
 class Fantype(models.Model):
     type= models.CharField(max_length=50)
@@ -25,7 +38,7 @@ def upload_to_product_image(instance, filename):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey('Product', related_name='images', on_delete=models.CASCADE,null=True,blank=True)
+    product = models.ForeignKey('Product', related_name='productimages', on_delete=models.CASCADE,null=True,blank=True)
     image = models.ImageField(upload_to=upload_to_product_image)
 
     def __str__(self):

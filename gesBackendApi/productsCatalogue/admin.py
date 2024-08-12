@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product,User,Company,Fantype,Product, ProductImage
+from .models import Product,User,Company,Fantype,Product, ProductImage, CompanyImage
 
 
 class ProductImageInline(admin.TabularInline):
@@ -9,7 +9,16 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
 
+class ComapnyImageInline(admin.TabularInline):
+    model = CompanyImage
+    extra = 1
+
+class CompanyAdmin(admin.ModelAdmin):
+    inlines = [ComapnyImageInline]
+
+
 admin.site.register(Product, ProductAdmin,)
 admin.site.register(ProductImage)
-admin.site.register(Company)
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(CompanyImage)
 admin.site.register(Fantype)

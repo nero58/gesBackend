@@ -1,25 +1,39 @@
-from productsCatalogue.models import Product,Company,Fantype,ProductImage
+from productsCatalogue.models import Product,Company,Fantype,ProductImage,CompanyImage
 from rest_framework import serializers
 import json
 
+
+class CompanyImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CompanyImage
+        fields = ['image']
+
+    def get_image(self, obj):
+        if obj.image:
+            return f"/{obj.image.name}"
+        return None
+    
+
 class ManufacturerSerializer(serializers.ModelSerializer):
+    img = CompanyImageSerializer(many=True)
     class Meta:
         model = Company
-        fields = ['company_name','about']
-
-
+        fields = ['company_name','img','about']
     
+
 class CompaniesRouteSerializer(serializers.ModelSerializer):
     products=serializers.SerializerMethodField()
     class Meta:
         model = Company
-        fields = ['company_name','about','products']
+        fields = ['company_name','img','header','about','products']
     
     def get_products(self,obj):
         comp = Company.objects.get(company_name =  obj.company_name)
         products= Product.objects.filter(manufacturer =comp)
 
-        return [{'partnumber': product.part_number} for product in products]
+        return [{'product': f"{product.manufacturer} {product.part_number} Cooling Fan", 'img': product.img} for product in products]
 
 class FanTypeSerializer(serializers.ModelSerializer):
     class Meta:

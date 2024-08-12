@@ -22,5 +22,4 @@ urlpatterns = [
     path('gesadmin/', admin.site.urls),
     path('', include("productsCatalogue.urls")),
     # path('auth/', include("restrictAdmin.urls")),
-    # path('enquiry/', include("Enquiry.urls")),
 ]

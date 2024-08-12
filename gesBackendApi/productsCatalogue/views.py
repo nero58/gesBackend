@@ -18,17 +18,10 @@ def getroutes(request):
         {"GET":"api/product/<part_number>"},
         {"GET":"api/companies/all"},
         {"GET":"api/products/<company_name>"},
-        # {"POST":"api/submit-enquiry"}
+        {"GET":"api/products/search/?query=<str>"},
         ]
 
     return JsonResponse(routes,safe=False)
-
-# @api_view(['GET'])
-# def getCompanyProducts(request,company):
-#     manufacturer = Company.objects.get(company_name=company)
-#     pro = Product.objects.filter(manufacturer=manufacturer)
-#     serial = ProductSerializer(pro, many=True)
-#     return Response(serial.data)
 
 @api_view(['GET'])
 def getAllProducts(request):
@@ -52,11 +45,9 @@ def getCompanyAndProducts(request,company):
 
 @api_view(["GET"])
 def getCompanies(request):
-    comp = Company.objects.all()
+    comp = Company.objects.all().prefetch_related('img')
     compserial = ManufacturerSerializer(comp,many=True)
     return Response(compserial.data)
-
-# @api_view
 
 class ProductSearchView(generics.ListAPIView):
     queryset = Product.objects.all()
