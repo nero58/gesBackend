@@ -6,7 +6,7 @@ def upload_to_company_image(instance, filename):
     return f'companies/{comapny_name}/{filename}'
 
 class CompanyImage(models.Model):
-    company_ref = models.ForeignKey('Company', related_name='companyprofileimg', on_delete=models.CASCADE,null=True,blank=True)
+    company_ref = models.ForeignKey('Company', related_name='images', on_delete=models.CASCADE,null=True,blank=True)
     image = models.ImageField(upload_to=upload_to_company_image)
 
     def __str__(self):
@@ -16,9 +16,8 @@ class CompanyImage(models.Model):
 class Company(models.Model):
     company_name=models.CharField(max_length=50,unique=True)
     about = models.CharField(max_length=1000,blank=True)
-    img = models.OneToOneField(CompanyImage, blank=True, on_delete=models.CASCADE)
+    img = models.ManyToManyField(CompanyImage, blank=True, related_name='companies')
     
-
     def __str__(self):
         return self.company_name
     
@@ -60,6 +59,8 @@ class Product(models.Model):
     Material = models.CharField(max_length=10, default="Plastic")
     Color = models.CharField(max_length=10, default="Black")
     Warrenty = models.CharField(max_length=10, default="1 Year")
+    RPM = models.CharField(max_length=10, null=True, blank=True)
+    Airflow = models.CharField(max_length=10, null=True, blank=True)
     instock = models.BooleanField(default=True)
 
 

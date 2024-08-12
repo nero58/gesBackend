@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import AllProductSerializer,CompaniesRouteSerializer,ManufacturerSerializer,SingleProductSerializer
+from .serializers import AllProductSerializer,CompaniesRouteSerializer,ManufacturerSerializer,SingleProductSerializer,SearchProductSerializer
 from productsCatalogue.models import Product,Company,User
 
 
@@ -45,11 +45,12 @@ def getCompanyAndProducts(request,company):
 
 @api_view(["GET"])
 def getCompanies(request):
-    comp = Company.objects.all().prefetch_related('img')
-    compserial = ManufacturerSerializer(comp,many=True)
+    comp = Company.objects.all()
+    compserial = ManufacturerSerializer(comp, many=True)
     return Response(compserial.data)
+
 
 class ProductSearchView(generics.ListAPIView):
     queryset = Product.objects.all()
-    serializer_class = AllProductSerializer
+    serializer_class = SearchProductSerializer
     filterset_class = ProductFilter
