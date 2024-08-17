@@ -87,7 +87,7 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com'
 CSRF_TRUSTED_ORIGINS = [
     'https://admin.globalelectronicsolutions.in',
     'http://127.0.0.1:8000',
-    'https://gesbackend-production.up.railway.app/'
+    'https://gesbackend-production.up.railway.app'
 ]
 # CSRF_COOKIE_SECURE = True
 # CSRF_COOKIE_DOMAIN = '.globalelectronicsolutions.in'
