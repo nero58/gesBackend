@@ -85,6 +85,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://admin.globalelectronicsolutions.in',
     'https://check.globalelectronicsolutions.in',
     'http://127.0.0.1:8000',
+    'https://gesbackend-production.up.railway.app',
 
 ]
 
