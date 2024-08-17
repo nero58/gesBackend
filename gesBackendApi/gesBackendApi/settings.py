@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ydl-mx!s0a4b^!^1=+p677mye1@$#4ycri0nr!m1l2s+9-srl^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ["localhost", "gesadmin.localhost"] #for local testing, else empty would work
 ALLOWED_HOSTS = ["*"] #for local testing, else empty would work
@@ -54,19 +54,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
 
-    # # 'corsheaders.middleware.CorsMiddleware',
-    # # 'restrictAdmin.views.if404Middleware',
-    # # 'django_hosts.middleware.HostsRequestMiddleware',
-    # 'django.middleware.security.SecurityMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # # 'restrictAdmin.views.RestrictStaffToAdminMiddleware',
-    # # 'allauth.account.middleware.AccountMiddleware',
-    # # 'django_hosts.middleware.HostsResponseMiddleware'
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -97,9 +84,13 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com'
 #     "http://127.0.0.1:8000",
 #     "https://global-electronics.vercel.app"
 # ]
-CSRF_TRUSTED_ORIGINS = ['https://admin.globalelectronicsolutions.in']
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_DOMAIN = '.globalelectronicsolutions.in'
+CSRF_TRUSTED_ORIGINS = [
+    'https://admin.globalelectronicsolutions.in',
+    'http://127.0.0.1:8000',
+    'https://gesbackend-production.up.railway.app/'
+]
+# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_DOMAIN = '.globalelectronicsolutions.in'
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'gesBackendApi.urls'
 
