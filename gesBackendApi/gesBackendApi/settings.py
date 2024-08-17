@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ydl-mx!s0a4b^!^1=+p677mye1@$#4ycri0nr!m1l2s+9-srl^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ["localhost", "gesadmin.localhost"] #for local testing, else empty would work
 ALLOWED_HOSTS = ["*"] #for local testing, else empty would work
@@ -97,7 +97,9 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com'
 #     "http://127.0.0.1:8000",
 #     "https://global-electronics.vercel.app"
 # ]
-
+CSRF_TRUSTED_ORIGINS = ['https://admin.globalelectronicsolutions.in']
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_DOMAIN = '.globalelectronicsolutions.in'
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'gesBackendApi.urls'
 
