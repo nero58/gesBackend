@@ -2,6 +2,7 @@ from productsCatalogue.models import Product, Company, Fantype, ProductImage, Co
 from rest_framework import serializers
 from django.core.cache import cache
 from django.db.models import Prefetch
+import json
 
 class CompanyImageSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
@@ -45,7 +46,11 @@ class CompaniesRouteSerializer(serializers.ModelSerializer):
     def get_products(self, obj):
         products = Product.objects.filter(manufacturer=obj).prefetch_related('productimages')
         return RelatedProductSerializer(products, many=True).data
-
+class FanTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fantype
+        fields = ['type'] 
+        
 class ProductImageSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
 
@@ -61,10 +66,28 @@ class ProductImageSerializer(serializers.ModelSerializer):
 class AllProductSerializer(serializers.ModelSerializer):
     manufacturer = ManufacturerSerializer()
     img = serializers.SerializerMethodField()
+    details = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['id', 'img', 'manufacturer', 'fan_type', 'part_number', 'ac_dc', 'length', 'width', 'height', 'voltage', 'current', 'termination', 'Material', 'Color', 'Warrenty', 'RPM', 'Airflow', 'instock']
+        fields = ['id', 'img', 'manufacturer','details']
+    def get_details(self, obj):
+        return [
+            {"name":"fan type","value":json.loads(json.dumps(FanTypeSerializer(obj.fan_type).data))["type"]},
+            {"name":'part number', "value": obj.part_number},
+            {"name":'ac dc', "value": f" {obj.ac_dc}"},
+            {"name":'size', "value": f"{obj.length} MM x {obj.width} MM x {obj.height} MM"},
+            {"name":'voltage', "value": f"{obj.voltage} VDC"},
+            {"name":'current', "value": f"{obj.current} A" },
+            {"name":'termination', "value": f"{obj.termination} Wires/Pins" if int(obj.termination) > 1 else f"{obj.termination} Wire/Pin"},
+            {"name":'Material', "value":obj.Material},
+            {"name":'Color', "value": obj.Color},
+            {"name":'Warrenty', "value": obj.Warrenty},
+            {"name":'RPM', "value": f"{obj.RPM}"},
+            {"name":'Airflow', "value": f"{obj.Airflow} CFM"},
+            {"name":'instock', "value": obj.instock},
+
+        ]
 
     def get_img(self, obj):
         images = obj.productimages.all()
