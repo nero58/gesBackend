@@ -63,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 ]
 
 REST_FRAMEWORK = {
@@ -80,17 +81,19 @@ AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com'
 
-# CORS_ORIGIN_WHITELIST = [
-#     "http://127.0.0.1:8000",
-#     "https://global-electronics.vercel.app"
-# ]
 CSRF_TRUSTED_ORIGINS = [
     'https://admin.globalelectronicsolutions.in',
+    'https://check.globalelectronicsolutions.in',
     'http://127.0.0.1:8000',
-    'https://gesbackend-production.up.railway.app'
+
 ]
-# CSRF_COOKIE_SECURE = True
-# CSRF_COOKIE_DOMAIN = '.globalelectronicsolutions.in'
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_DOMAIN = '.globalelectronicsolutions.in'
+CSRF_COOKIE_SECURE = True  
+CSRF_USE_SESSIONS = False  
+CSRF_COOKIE_HTTPONLY = True 
+
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'gesBackendApi.urls'
 
@@ -160,6 +163,8 @@ USE_I18N = True
 USE_TZ = True
 
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
@@ -173,5 +178,3 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
